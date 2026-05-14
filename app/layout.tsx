@@ -10,10 +10,27 @@ const beVietnamPro = Be_Vietnam_Pro({
   display: 'swap',
 })
 
-const appIcon = '/icon.png'
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.NEXT_PUBLIC_APP_URL ||
+  'https://invoice-hub.atomsolution.vn'
+
+function withBasePath(path: string) {
+  return `${basePath}${path}`
+}
+
+function absoluteUrl(path: string) {
+  return new URL(withBasePath(path), siteUrl).toString()
+}
+
+const appIcon = withBasePath('/icon.png')
+const appleIcon = withBasePath('/apple-icon.png')
+const favicon = withBasePath('/favicon.ico')
+const canonicalUrl = new URL(siteUrl).toString()
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://invoice-hub.atomsolution.vn'),
+  metadataBase: new URL(siteUrl),
   applicationName: 'Trợ lý AI 1Invoice',
   title: {
     default: 'Trợ lý AI 1Invoice',
@@ -32,15 +49,15 @@ export const metadata: Metadata = {
   creator: 'ATOM Solution',
   publisher: 'ATOM Solution',
   alternates: {
-    canonical: '/',
+    canonical: canonicalUrl,
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: favicon, sizes: 'any' },
       { url: appIcon, type: 'image/png' },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/apple-icon.png',
+    shortcut: favicon,
+    apple: appleIcon,
   },
   openGraph: {
     type: 'website',
@@ -48,10 +65,10 @@ export const metadata: Metadata = {
     siteName: '1Invoice',
     title: 'Trợ lý AI 1Invoice',
     description: 'Đăng ký hóa đơn điện tử 1Invoice nhanh hơn với trợ lý AI.',
-    url: '/',
+    url: canonicalUrl,
     images: [
       {
-        url: appIcon,
+        url: absoluteUrl('/icon.png'),
         width: 512,
         height: 512,
         alt: '1Invoice',
@@ -62,7 +79,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: 'Trợ lý AI 1Invoice',
     description: 'Trợ lý AI hỗ trợ đăng ký hóa đơn điện tử 1Invoice.',
-    images: [appIcon],
+    images: [absoluteUrl('/icon.png')],
   },
   robots: {
     index: true,
