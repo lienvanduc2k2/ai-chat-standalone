@@ -127,7 +127,7 @@ export default function ProgressSidebar({
   )
 
   return (
-    <aside className='hidden w-[280px] shrink-0 overflow-y-auto border-l border-slate-200/80 bg-white/70 p-5 shadow-[-6px_0_24px_rgb(15,23,42,0.035)] backdrop-blur-xl lg:block'>
+    <aside className='hidden w-[340px] shrink-0 overflow-y-auto border-l border-slate-200/80 bg-white/70 p-5 shadow-[-6px_0_24px_rgb(15,23,42,0.035)] backdrop-blur-xl lg:block'>
       <div className='polished-panel mb-4 rounded-xl p-4'>
         <p className='mb-3 text-[10px] font-extrabold tracking-[0.14em] text-slate-400 uppercase'>
           Tiến độ đăng ký
@@ -189,10 +189,10 @@ export default function ProgressSidebar({
           </p>
           <dl className='space-y-2.5 text-xs'>
             {infoRows.map(({ label, value, highlight }) => (
-              <div key={label} className='flex gap-2'>
-                <dt className='w-20 shrink-0 text-slate-400 font-medium'>{label}</dt>
+              <div key={label} className='flex gap-3'>
+                <dt className='w-24 shrink-0 text-slate-400 font-medium'>{label}</dt>
                 <dd
-                  className={`flex-1 truncate font-semibold ${
+                  className={`min-w-0 flex-1 break-words font-semibold leading-snug ${
                     highlight ? 'text-teal-700' : 'text-slate-700'
                   }`}
                 >

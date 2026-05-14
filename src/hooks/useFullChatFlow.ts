@@ -110,6 +110,9 @@ const normalizePaymentStatus = (status: unknown) =>
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
+const LEGAL_DOCUMENT_GUIDE =
+  'Thanh toán đã thành công. Bây giờ mình sẽ hỗ trợ hoàn tất hồ sơ pháp lý để gửi đăng ký.\n\nBạn cần chuẩn bị 3 tài liệu:\n**1. CCCD mặt trước** của người đại diện pháp luật: ảnh rõ QR, không lóa, không mất góc.\n**2. CCCD mặt sau** của cùng người đại diện để đối chiếu.\n**3. Giấy phép kinh doanh/Giấy chứng nhận đăng ký doanh nghiệp**: có thể tải ảnh hoặc PDF.\n\nTrước tiên, vui lòng tải lên **mặt trước CCCD**.'
+
 export function useFullChatFlow(params: {
   invoicePackages: ChatPackage[]
   baseFeeItem: RawPackage | null
@@ -314,7 +317,7 @@ export function useFullChatFlow(params: {
           if (['paid', 'success', 'completed', 'complete', 'done'].includes(status)) {
             setPaymentStatus('paid')
             setPaymentMessage('Thanh toán thành công.')
-            push(ai('Thanh toán đã thành công. Vui lòng tải lên mặt trước CCCD của người đại diện pháp luật.'))
+            push(ai(LEGAL_DOCUMENT_GUIDE))
             setStep(FullChatStep.ASK_CCCD_FRONT)
             return
           }
@@ -495,7 +498,7 @@ export function useFullChatFlow(params: {
         return
       }
       if (step === FullChatStep.SHOW_QR) {
-        await typeAI('Vui lòng tải lên mặt trước CCCD của người đại diện pháp luật.')
+        await typeAI(LEGAL_DOCUMENT_GUIDE)
         setStep(FullChatStep.ASK_CCCD_FRONT)
         return
       }

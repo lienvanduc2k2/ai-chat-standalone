@@ -1,4 +1,4 @@
-import { config, requireInvoiceHubUrl } from './config'
+import { config, requireInvoiceHubUrl, withBasePath } from './config'
 
 export interface IdCardData {
   fullName?: string
@@ -46,10 +46,13 @@ function loadOcrSdk() {
 
   ocrSdkScriptPromise = new Promise<void>((resolve, reject) => {
     const script = document.createElement('script')
-    script.src = '/scripts/ocr-sdk.js'
+    script.src = withBasePath('/scripts/ocr-sdk.js')
     script.async = true
     script.onload = () => resolve()
-    script.onerror = () => reject(new Error('Không tải được OCR SDK.'))
+    script.onerror = () => {
+      ocrSdkScriptPromise = null
+      reject(new Error(`Không tải được OCR SDK từ ${script.src}.`))
+    }
     document.head.appendChild(script)
   })
 
